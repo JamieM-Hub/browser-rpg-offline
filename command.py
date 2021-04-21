@@ -5,8 +5,8 @@ from random import choice
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "get", "inventory", "kill", "hello", 
-            "load", "look", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "swim", "subtract",
+commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "fuck", "get", "give", "hate", "inventory", "kill", "hello", 
+            "load", "look", "love", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "swim", "subtract",
             "take", "talk", "terminal"]
             
 languages = ["Afghan", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Assamesse", "Aymara", "Azerbaijani", 
@@ -33,7 +33,7 @@ def add(target, player):
 def adjacent(target, player):
     location_data = data[player.location]
     adjacent_locations = location_data['adjacent']
-    output = "You can move to the following areas: || "
+    output = "You can move to the following locations: || "
     for location in adjacent_locations:
         output += f" {data[location]['name']} ({location}) |"
     output += "|"
@@ -78,6 +78,27 @@ def equip(target, player):
     else:
         return "One cannot equip what one does not have in one's inventory."
 
+
+def fuck(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "U ok hun?"
+    elif target in player.inventory:
+        return "A good workman never blames his tools."
+    elif target == location_data['NPC']:
+        return "Did something happen between you guys?"
+    elif target == "terminal" or target == "you":
+        return "Well f^$# you too!"
+    elif target == player.name:
+        return "Why be so hard on yourself? It's only a game."
+    else:
+        _choice = [True, False]
+        _choice = choice(_choice)
+        if _choice:
+            return f"Yeeaaahhhhh f^$# {target}!"
+        else:
+            return f"Noooooooooo I love {target}!"
+
 def get(target, player):
     location_data = data[player.location]
     if target == "":
@@ -87,6 +108,35 @@ def get(target, player):
         return f"{target.capitalize()} added to your inventory."
     else:
         return "Nothing like that here."
+
+def give(target, player):
+    if target == "":
+        return equip(target, player)
+    elif target in player.inventory:
+        # process NPC receiving item
+        return f"You gave away your {target}"
+    else:
+        return f"You don't have {target} to give. I hope you have love to give."
+
+
+def hate(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "I think you need a therapist."
+    elif target == "you":
+        return "What have I done?!"
+    elif target == player.name:
+        return "I could never hate you, you're so weird!"
+    elif target == player.equipped:
+        return "You could just stop using it..."
+    elif target in player.inventory:
+        return "A good workman never blames his tools."
+    elif target in location_data['NPC']:
+        return "Honestly, I think you've got the wrong idea. Have you looked in the mirror lately?"
+    elif target in commands:
+        return f"Strange, most humans love {target}."
+    else:
+        return f"I don't know what {target} did to you but I got yo back yo."
 
 def hello(target, player):
     if target == "":
@@ -113,6 +163,24 @@ def load(target, player):
 def look(target, player):
     return "Seriously? There's a picture..."
 
+def love(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "<3"
+    elif target == "me":
+        return "You can't make me!"
+    elif target == player.name:
+        return f"I HATE {player.name.upper()}."
+    elif target == player.equipped:
+        return "I can see that... Are you okay?"
+    elif target in player.inventory:
+        return "A good workman always loves his tools."
+    elif target in location_data['NPC']:
+        return "Now's probably a good time to say. Life's short."
+    elif target in commands:
+        return f"Yes, yes. I also love {target}!"
+    else:
+        return "I don't know how to love that but you do you boo."
 
 def move(target, player):
     location_data = data[player.location]

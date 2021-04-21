@@ -53,8 +53,11 @@ def game():
         if request.form.get("user_input"):
             user_input = request.form.get("user_input")
             output = command.processCommand(user_input, player)
+            if output == None:
+                output = "ERROR: output not generated"
 
     location = data[player.location]
+    
     return render_template("game.html", player=player, location=location, output=output)
 
 

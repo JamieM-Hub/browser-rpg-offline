@@ -244,12 +244,15 @@ def processCommand(input, player):
     location_data = data[player.location]
     command, target = parseInput(input)
 
-    if command in commands:
+    if command in location_data['commands']:
+        return location_data['commands'][command]
+
+    elif command in commands:
         return eval(command + "(target, player)")
 
-    elif command in location_data['commands']:
-        return command
-
+    elif command in player.inventory or location_data['objects']:
+        return f"Do what with {command}?"
+        
     else:
         language = choice(languages)
         return f"{command}... Is that {language}?"

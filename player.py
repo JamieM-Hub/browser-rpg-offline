@@ -19,8 +19,11 @@ class Player:
 
 
     def changeName(self, new_name):
-        print("new name: " + new_name)
         self.name = new_name
+
+
+    def getItem(self, item):
+        self.inventory.append(item)
 
 
     def equipItem(self, item):

@@ -3,9 +3,9 @@ import os, json
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "die", "door", "equip", "inventory", "kill", "hello", 
-            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "quit", "save", "subtract",
-            "talk", "terminal"]
+commands = ["add", "adjacent", "die", "door", "equip", "get", "inventory", "kill", "hello", 
+            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "quit", "pickup", "save", "subtract",
+            "take", "talk", "terminal"]
 
 # Commands by name
 
@@ -62,6 +62,15 @@ def equip(target, player):
     else:
         return "One cannot equip what one does not have in one's inventory."
 
+def get(target, player):
+    location_data = data[player.location]
+    if target == "":
+        objects(target, player)
+    elif target in location_data['objects']:
+        player.getItem(target)
+        return f"{target.capitalize()} added to your inventory."
+    else:
+        return "Nothing like that here."
 
 def hello(target, player):
     if target == "":
@@ -156,6 +165,11 @@ def objects(target, player):
         output += f"{object} "
     return output
 
+
+def pickup(target, player):
+    return get(target, player)
+
+
 def save(target, player):
     player.saveGame()
     return "I have now committed your entire life's experience to memory."
@@ -176,6 +190,10 @@ def subtract(target, player):
             return "Words gone bye-bye."
 
 
+def take(target, player):
+    return get(target, player)
+
+
 def terminal(target, player):
     if target == "":
         return "You called?"
@@ -183,6 +201,9 @@ def terminal(target, player):
         return f"I think it's about {player.terminal['int_count']} but I'm not sure."
     if target == "words":
         return player.terminal['str_count']
+
+
+# Dependant command functions
 
 # Utility functions
 

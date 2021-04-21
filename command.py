@@ -6,7 +6,7 @@ with open("data/locations.json", "r") as r:
         data = json.load(r)
 
 commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "get", "inventory", "kill", "hello", 
-            "load", "look", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "subtract",
+            "load", "look", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "swim", "subtract",
             "take", "talk", "terminal"]
             
 languages = ["Afghan", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Assamesse", "Aymara", "Azerbaijani", 
@@ -225,6 +225,9 @@ def subtract(target, player):
             return "Words gone bye-bye."
 
 
+def swim(target, player):
+    return "... humans really amaze me sometimes."
+
 def take(target, player):
     return get(target, player)
 
@@ -260,11 +263,11 @@ def processCommand(input, player):
     elif command in commands:
         return eval(command + "(target, player)")
 
-    elif command in player.inventory or location_data['objects']:
+    elif command in player.inventory or command in location_data['objects']:
         return f"Do what with {command}?"
 
     else:
         language = choice(languages)
-        return f"{command}... Is that {language}?"
+        return f"'{command}'... Is that {language}?"
         
     

@@ -1,0 +1,26 @@
+{
+    "location_1": {
+        "name": "Inside Barn",
+        "img_path": "../static/img/farm_inside-barn.jpg",
+        "NPC": null,
+        "objects": [
+            "stick", "scrap"
+        ],
+        "commands": {
+            "door": "location_1_door",
+            "window": "location_1_window"
+        }
+    },
+    "location_2": {
+        "name": "Outside Barn",
+        "img_path": "../static/img/farm_outside-barn.jpg",
+        "NPC": "fred",
+        "objects": null,
+        "commands": {
+            "fred": "talk_to_fred",
+            "window": "location_2_window",
+            "door": "location_2_door"
+        }
+    }
+
+}

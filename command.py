@@ -3,7 +3,7 @@ import os, json
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["adjacent", "door", "equip", "inventory", "kill", "hello", "move"]
+commands = ["adjacent", "door", "equip", "inventory", "kill", "hello", "load", "move", "name", "save"]
 
 # Commands by name
 
@@ -59,6 +59,12 @@ def kill(target, player):
 def inventory(target, player):
     return equip("", player)
 
+
+def load(target, player):
+    player.loadGame()
+    return "You just went back in time, " + player.name + "! Humans are crazy."
+
+
 def move(target, player):
     location_data = data[player.location]
     if target == "":
@@ -69,7 +75,17 @@ def move(target, player):
         return "You moved to " + data[player.location]['name']
     else:
         return "That is not a place you can move to."
-    
+
+
+def name(target, player):
+    player.changeName(target)
+    return "From now on, I shall call you " + player.name + "."
+
+
+def save(target, player):
+    player.saveGame()
+    return "I have committed your entire game to memory and can recall it for you at any time."
+
 
 # Utility functions
 

@@ -3,24 +3,26 @@ if os.path.exists("env.py"):
     import env
 from flask import (Flask, flash, redirect, render_template, request, session,
                    url_for)
-from player import playerEncoder
 from player import Player
 
 with open("data/locations.json", "r") as r:
     data = json.load(r)
 
 player = Player(
-        "default", 
-        "l1", 
-        ["default1", "default2"]
+        "", 
+        "", 
+        [""]
     )
 
 
 # non-Flask functions
-def load_data():
+def load_data(player):
     with open("data/save_data.json", "r") as r:
         save_data = json.load(r)
-    print(save_data)
+    player.name = save_data['player']['name']
+    player.location = save_data['player']['location']
+    player.inventory = save_data['player']['inventory']
+    player.equipped = save_data['player']['equipped']
 
 
 # Flask app and routes
@@ -57,8 +59,6 @@ def victory():
 
 @app.route("/save")
 def save():
-    save_data = playerEncoder().encode(player)
-    print(save_data)
     save_data = {
         "player": {
             "name": player.name,
@@ -77,7 +77,7 @@ def save():
 if __name__ == "__main__":
     os.system('clear')
     print("i can has func!")
-    load_data()
+    load_data(player)
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)

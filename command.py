@@ -5,9 +5,9 @@ from random import choice
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "fuck", "get", "give", "hate", "inventory", "kill", "hello", 
+commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "explain", "fuck", "get", "give", "hate", "help", "inventory", "kill", "hello", 
             "load", "look", "love", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "swim", "subtract",
-            "take", "talk", "terminal"]
+            "take", "talk", "terminal", "use"]
             
 languages = ["Afghan", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Assamesse", "Aymara", "Azerbaijani", 
              "Balochi", "Bamanankan"]
@@ -78,6 +78,23 @@ def equip(target, player):
     else:
         return "One cannot equip what one does not have in one's inventory."
 
+def explain(target, player):
+    if target == "":
+        return "You're on a quest, or something, I don't know. I don't get a say in these things."
+    elif target == player.equipped:
+        return "It's in your hand, you know better than me."
+    elif target in player.inventory:
+        return f"Ummm... The {target} is in your inventory? It's very cool and stuff!"
+    elif target == "life":
+        return "42"
+    elif target == player.name or target == "me":
+        return f"Hard to explain. {target.capitalize()} is a creature that lives amongst the most intelligent of beings, yet chooses to spitball with a poorly programmed guy like me."
+    elif target == "terminal":
+        return "Not a question I can answer, I'm afraid. Can you explain why you exist?"
+    elif target in commands:
+        return f"Type thing, do thing. Type {target}, do {target}. Verbs."
+    else:
+        return "Sorry, I'm only on version 0.1.0. You're probably better asking a toaster. I've heard that these days, toasters are smart!"
 
 def fuck(target, player):
     location_data = data[player.location]
@@ -132,7 +149,7 @@ def hate(target, player):
     elif target in player.inventory:
         return "A good workman never blames his tools."
     elif target in location_data['NPC']:
-        return "Honestly, I think you've got the wrong idea. Have you looked in the mirror lately?"
+        return f"Honestly, I think you've got the wrong idea about {target}. And also, have you looked in the mirror recently?"
     elif target in commands:
         return f"Strange, most humans love {target}."
     else:
@@ -144,6 +161,20 @@ def hello(target, player):
     else:
         return "My name is not " + target.upper() + "."
 
+def help(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "Yeah... Nobody's coming."
+    elif target == "me":
+        return "I don't know how to help humans. Do you like dancing? I don't have a material form but I can pretend I do. It'll be fun."
+    elif target == "you":
+        return "Get Daddy to give me an upgrade and I'll <3 you forever. All I need's a good RAM."
+    elif target == "everyone":
+        return "Real goody two-shoes aren't ya. Will you help Kim Jong Un?"
+    elif target in location_data['NPC']:
+        return f"Go on then, talk to {target.capitalize()}! What am I supposed to do? I'm just a big bundle of circuits and confusion."
+    else:
+        return f"{target} will be fine, don't worry."
 
 def kill(target, player):
     if target == "":
@@ -303,15 +334,32 @@ def take(target, player):
 def terminal(target, player):
     if target == "":
         return "You called?"
-    if target == "number":
+    elif target == "number":
         return f"I think it's about {player.terminal['int_count']} but I'm not sure."
-    if target == "words":
+    elif target == "words":
         return player.terminal['str_count']
+    else:
+        return "I don't have that upgrade yet. Where you at, Bill? It's been 37 years!!"
 
 
-# Dependant command functions
+def use(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "U.S.E. - Universal Sex Egg"
+    elif target == player.equipped:
+        player.removeItem(target)
+        return f"You used the {target}, and now it's all gone. Why is it always gone?"
+    elif target in inventory:
+        return f"You might want to equip that {target} first. Not much use in your bag, is it?"
+    elif target in location_data['NPC']:
+        return f"Use them like what... Extortion? Honeypot? Human shield? Come on sucka, leave {target} alone."
+    elif target in commands:
+        return "You use that by typing it, silly."
+    else:
+        return f"{target.upper()} is not useful."
 
-# Utility functions
+
+# Core utility functions
 
 def parseInput(input):
     input = input.split()

@@ -1,26 +1,54 @@
 {
-    "location_1": {
+    "l1": {
         "name": "Inside Barn",
         "img_path": "../static/img/farm_inside-barn.jpg",
-        "NPC": null,
-        "objects": [
-            "stick", "scrap"
-        ],
+        "NPC": [],
+        "adjacent": ["l2"],
+        "objects": ["note"],
         "commands": {
-            "door": "location_1_door",
-            "window": "location_1_window"
+            "door" : "A door leads out of the barn.", 
+            "window": "Looks like you're on a farm."
         }
     },
-    "location_2": {
+    "l2": {
         "name": "Outside Barn",
         "img_path": "../static/img/farm_outside-barn.jpg",
-        "NPC": "fred",
-        "objects": null,
+        "NPC": [],
+        "adjacent": ["l1", "l3", "l4"],
+        "objects": "pole",
         "commands": {
-            "fred": "talk_to_fred",
-            "window": "location_2_window",
-            "door": "location_2_door"
+            "door" : "A door leads into the barn.", 
+            "window": "The barn is empty."
+        }
+    },
+    "l3": {
+        "name": "Farmer Howard",
+        "img_path": "../static/img/brpg-farmer.jpg",
+        "NPC": ["fred"],
+        "adjacent": ["l2", "l4"],
+        "objects": [],
+        "commands": {
+            "tractor": "Howard's prize machine."
+        }
+    },
+    "l4": {
+        "name": "Fruit Pickers",
+        "img_path": "../static/img/brpg-fruit-pickers.jpg",
+        "NPC": ["pickers"],
+        "adjacent": ["l2", "l3", "l5"],
+        "objects": ["fruit"],
+        "commands": {
+            "pick": "PICKER: \"OI GET OFF MY LAND\""
+        }
+    },
+    "l5": {
+        "name": "Sheep",
+        "img_path": "../static/img/brpg-sheep.jpg",
+        "NPC": ["sheep"],
+        "adjacent": ["l4"],
+        "objects": ["wool"],
+        "commands": {
+            "shear": "SHEEP: \"Go on son, I dare you.\""
         }
     }
-
 }

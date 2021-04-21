@@ -5,10 +5,10 @@
     <img src="{{ location.img_path }}" alt="{{ location.name }}" width="1000">
 </div>
 
-<form method="POST" action="{{ url_for('game') }}">
-    <h4>{{ player.name|upper }} with {{ player.inventory|upper }} at {{ player.location|upper }}</h4>
+<form method="POST" action="{{ url_for('game') }}" autocomplete="off">
+    <h4>{{ player.name|upper }} equipped with {{ player.inventory|upper }} at {{ location.name|upper }}</h4>
 
-    <input type="number" id="location" name="location" />
+    <input type="text" id="location" name="location" />
     <button type="submit">Change location</button>
     <input type="text" id="inventory" name="inventory" />
     <button type="submit">Change inventory</button>

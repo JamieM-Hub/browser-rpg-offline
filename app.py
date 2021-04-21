@@ -6,9 +6,9 @@ from flask import (Flask, flash, redirect, render_template, request, session,
 
 
 player = player.Player(
-    "default_name", 
-    "location_1", 
-    "default_item"
+    "barry", 
+    "l4", 
+    "stick"
     )
 
 
@@ -35,12 +35,12 @@ def game():
     output = "..."
     if request.method == "POST":
         if request.form.get("location"):
-            player.location = "location_" + request.form.get("location")
+            player.location = request.form.get("location")
         if request.form.get("inventory"):
             player.inventory = request.form.get("inventory")
         if request.form.get("user_input"):
             user_input = request.form.get("user_input")
-            output = command.check(user_input)
+            output = command.check(user_input, player)
 
     with open("data/locations.json", "r") as r:
         data = json.load(r)

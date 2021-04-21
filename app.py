@@ -1,23 +1,29 @@
 import os, json, player, command
-
-# from bson.objectid import ObjectId
+if os.path.exists("env.py"):
+    import env
 from flask import (Flask, flash, redirect, render_template, request, session,
                    url_for)
+from player import playerEncoder
+from player import Player
 
 with open("data/locations.json", "r") as r:
     data = json.load(r)
 
-player = player.Player(
-    "barry", 
-    "l4", 
-    "stick"
+player = Player(
+        "default", 
+        "l1", 
+        ["default1", "default2"]
     )
 
 
-if os.path.exists("env.py"):
-    import env
+# non-Flask functions
+def load_data():
+    with open("data/save_data.json", "r") as r:
+        save_data = json.load(r)
+    print(save_data)
 
 
+# Flask app and routes
 app = Flask(__name__)
 
 
@@ -37,14 +43,8 @@ def game():
     output = "..."
 
     if request.method == "POST":
-
-        if request.form.get("inventory"):
-            player.inventory = request.form.get("inventory")
-            output = "You equipped your " + player.inventory + "."
-
-        if request.form.get("user_input"):
-            user_input = request.form.get("user_input")
-            output = command.check(user_input, player)
+        user_input = request.form.get("user_input")
+        output = command.check(user_input, player)
 
     location = data[player.location]
     return render_template("game.html", player=player, location=location, output=output)
@@ -55,18 +55,29 @@ def victory():
     return render_template("victory.html")
 
 
-'''
 @app.route("/save")
 def save():
-    with open("data/save_data.json", "w") as w:
-        json.dumps(player)
+    save_data = playerEncoder().encode(player)
+    print(save_data)
+    save_data = {
+        "player": {
+            "name": player.name,
+            "location": player.location,
+            "inventory": player.inventory,
+            "equipped": player.equipped
+        }
+    }
+    with open("data/save_data.json", "w") as fp:
+        json.dump(save_data, fp)
     return redirect(url_for('game'))
-'''
+
+
 
 
 if __name__ == "__main__":
     os.system('clear')
     print("i can has func!")
+    load_data()
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)

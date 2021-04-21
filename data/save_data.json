@@ -1,0 +1,8 @@
+{
+    "player": {
+        "name": "default",
+        "location": "l1",
+        "inventory": ["default1", "default2"],
+        "equipped": "nothing"
+    }
+}

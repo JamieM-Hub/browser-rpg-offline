@@ -7,7 +7,7 @@ _time = time()
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "back", "baste", "bastemaster", "die", "door", "drink", "eat", "equip", "enter", "exit", "explain", "forward", "fuck", "get", "give", "harakiri", "hate", "help", "inventory", "kill", "hello", 
+commands = ["add", "adjacent", "back", "baste", "bastemaster", "bastemasterpro", "die", "door", "drink", "eat", "equip", "enter", "exit", "explain", "forward", "fuck", "get", "give", "go", "harakiri", "hate", "help", "here", "inventory", "kill", "hello", 
             "load", "look", "love", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "sacrifice", "save", "seppuku", "swim", "subtract",
             "take", "talk", "terminal", "use"]
             
@@ -73,12 +73,15 @@ def baste(target, player):
 def bastemaster(target, player):
     if target == "":
         return "...AA7323R = [,,.,,] &&&& a w a i t p a s s c o d e []_-----"
-    elif target == "passcode":
+    elif target == "passcode" or target == "admin" or target == "guest":
         return "...AA7323R = [xXxXx] &!!& n i c e t r y d o o f u s h4h4h4_h3h3h3"
     elif target == "done":
-        return "[ P A S S C O D E | A C C E P T E D ] ... Welcome to [[ Gordon Ramsay Simulator XP v4.2.0-beta ]]. What shall I baste, o master?"
+        return "[ P A S S C O D E | A C C E P T E D ] ... Welcome to [[ Gordon Ramsay Simulator XP v4.2.0-beta (bastemasterpro) ]]. What shall I baste, o master?"
     else:
         return "...AA7323R = [xXxXx] &!!& n o t p a s s c o d e : ( >>>>>_-----"
+
+def bastemasterpro(target, player):
+    return "......b..........4.....5........t....3.....d0n3"
 
 
 def die(target, player):
@@ -199,6 +202,8 @@ def give(target, player):
     else:
         return f"You don't have {target} to give. I hope you have love to give."
 
+def go(target, player):
+    return move(target, player)
 
 def harakiri(target, player):
     return exit()
@@ -242,6 +247,10 @@ def help(target, player):
         return f"Go on then, talk to {target.capitalize()}! What am I supposed to do? I'm just a big bundle of circuits and confusion."
     else:
         return f"{target} will be fine, don't worry."
+
+def here(target, player):
+    location_data = data[player.location]
+    return f"We are currently in the {location_data['name'].capitalize()} area."
 
 def kill(target, player):
     if target == "":

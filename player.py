@@ -25,6 +25,9 @@ class Player:
     def getItem(self, item):
         self.inventory.append(item)
 
+    def removeItem(self, item):
+        self.inventory.remove(item)
+
 
     def equipItem(self, item):
         self.equipped = item

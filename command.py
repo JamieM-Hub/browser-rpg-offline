@@ -4,7 +4,7 @@ with open("data/locations.json", "r") as r:
         data = json.load(r)
 
 commands = ["add", "adjacent", "die", "door", "equip", "get", "inventory", "kill", "hello", 
-            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "quit", "pickup", "save", "subtract",
+            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "subtract",
             "take", "talk", "terminal"]
 
 # Commands by name
@@ -160,7 +160,7 @@ def objects(target, player):
     location_data = data[player.location]
     objects = location_data['objects']
     print(objects)
-    output = "In this area I can see the following objects: "
+    output = "In this area I see the following objects: "
     for object in objects:
         output += f"{object} "
     return output
@@ -169,6 +169,22 @@ def objects(target, player):
 def pickup(target, player):
     return get(target, player)
 
+def place(target, player):
+    location_data = data[player.location]
+    if target == "":
+        # print inventory
+        equip(target, player)
+    elif target in player.inventory:
+        player.removeItem(target)
+        # process location accordingly
+        return f"{target} removed from your inventory. Bye {target}!"
+    else:
+        return "One cannot place what one does not have in one's inventory."
+
+    return
+
+def put(target, player):
+    return place(target, player) 
 
 def save(target, player):
     player.saveGame()

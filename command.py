@@ -9,8 +9,6 @@ commands = ["add", "adjacent", "die", "door", "equip", "inventory", "kill", "hel
 # Commands by name
 
 def add(target, player):
-    if target == "":
-        return "Add what?"
     try:
         target = int(target)
         print(target)
@@ -19,8 +17,11 @@ def add(target, player):
         player.terminal['int_count'] = sum
         return output
     except:
-        player.terminal['str_count'] += f" {target}"
-        return player.terminal['str_count']
+        if target == "":
+            return "Add what?"
+        else:
+            player.terminal['str_count'] += f" {target}"
+            return player.terminal['str_count']
 
 def adjacent(target, player):
     location_data = data[player.location]
@@ -131,6 +132,20 @@ def save(target, player):
     player.saveGame()
     return "I have now committed your entire life's experience to memory."
 
+def subtract(target, player):
+    try:
+        target = int(target)
+        print(target)
+        sum = player.terminal['int_count'] - (target)
+        output = f"{player.terminal['int_count']} - {target} = {sum}" 
+        player.terminal['int_count'] = sum
+        return output
+    except:
+        if target == "":
+            return "Subtract what?"
+        if target == "words":
+            player.terminal['str_count'] = ""
+            return "Words gone bye-bye."
 
 # Utility functions
 

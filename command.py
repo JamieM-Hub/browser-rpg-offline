@@ -4,7 +4,8 @@ with open("data/locations.json", "r") as r:
         data = json.load(r)
 
 commands = ["add", "adjacent", "die", "door", "equip", "inventory", "kill", "hello", 
-            "load", "move", "my", "name", "object", "objects", "quit", "save", "subtract"]
+            "load", "move", "my", "name", "object", "objects", "quit", "save", "subtract",
+            "terminal"]
 
 # Commands by name
 
@@ -146,6 +147,15 @@ def subtract(target, player):
         if target == "words":
             player.terminal['str_count'] = ""
             return "Words gone bye-bye."
+
+
+def terminal(target, player):
+    if target == "":
+        return "You called?"
+    if target == "number":
+        return f"I think it's about {player.terminal['int_count']} but I'm not sure."
+    if target == "words":
+        return player.terminal['str_count']
 
 # Utility functions
 

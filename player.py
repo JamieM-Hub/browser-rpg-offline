@@ -7,6 +7,11 @@ class Player:
         self.location = location
         self.inventory = inventory
         self.equipped = "nothing"
+        self.terminal_int = 0,
+        self.terminal = {
+            "int_count": 0,
+            "str_count": ""
+        }
 
 
     def changeLocation(self, new_location):
@@ -28,7 +33,11 @@ class Player:
                 "name": self.name,
                 "location": self.location,
                 "inventory": self.inventory,
-                "equipped": self.equipped
+                "equipped": self.equipped,
+                "terminal": {
+                    "int_count": self.terminal['int_count'],
+                    "str_count": self.terminal['str_count']
+                }
             }
         }
         with open("data/save_data.json", "w") as fp:
@@ -42,6 +51,8 @@ class Player:
         self.location = save_data['player']['location']
         self.inventory = save_data['player']['inventory']
         self.equipped = save_data['player']['equipped']
+        self.terminal['int_count'] = save_data['player']['terminal']['int_count']
+        self.terminal['str_count'] = save_data['player']['terminal']['str_count']
 
 
 

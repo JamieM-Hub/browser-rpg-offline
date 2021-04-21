@@ -1,4 +1,7 @@
-import os, json, player, command
+import os
+import json
+import player
+import command
 if os.path.exists("env.py"):
     import env
 from flask import (Flask, flash, redirect, render_template, request, session,
@@ -9,10 +12,10 @@ with open("data/locations.json", "r") as r:
     data = json.load(r)
 
 player = Player(
-        "default dave", 
-        "l1", 
-        [""]
-    )
+    "default dave",
+    "l1",
+    ["", "nothing"]
+)
 
 
 # non-Flask functions
@@ -23,6 +26,8 @@ def load_data(player):
     player.location = save_data['player']['location']
     player.inventory = save_data['player']['inventory']
     player.equipped = save_data['player']['equipped']
+    player.terminal['int_count'] = save_data['player']['terminal']['int_count']
+    player.terminal['str_count'] = save_data['player']['terminal']['str_count']
 
 
 # Flask app and routes
@@ -64,14 +69,16 @@ def save():
             "name": player.name,
             "location": player.location,
             "inventory": player.inventory,
-            "equipped": player.equipped
+            "equipped": player.equipped,
+            "terminal": {
+                "int_count": player.terminal['int_count'],
+                "str_count": player.terminal['str_count']
+            }
         }
     }
     with open("data/save_data.json", "w") as fp:
         json.dump(save_data, fp)
     return redirect(url_for('game'))
-
-
 
 
 if __name__ == "__main__":

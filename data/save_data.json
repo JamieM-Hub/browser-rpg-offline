@@ -1,1 +1,12 @@
-{"player": {"name": "bibby", "location": "l2", "inventory": ["default1", "default2"], "equipped": "nothing"}}
+{
+    "player": {
+        "name": "bibby",
+        "location": "l2",
+        "inventory": ["default1", "default2"],
+        "equipped": "nothing",
+        "terminal": {
+            "int_count": 0,
+            "str_count": ""
+        }
+    }
+}

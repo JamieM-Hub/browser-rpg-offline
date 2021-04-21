@@ -24,6 +24,7 @@ body {
 }
 
 #terminal_output {
-    height: 12vh;
+    /* height: 12vh; */
     padding:8px;
+    line-height: 8vh;
 }

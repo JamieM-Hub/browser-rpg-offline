@@ -2,16 +2,12 @@ import json
 
 class Player:
 
-    def __init__(self, name, location, inventory):
+    def __init__(self, name, location, inventory, equipped, terminal):
         self.name = name
         self.location = location
         self.inventory = inventory
-        self.equipped = "nothing"
-        self.terminal_int = 0,
-        self.terminal = {
-            "int_count": 0,
-            "str_count": ""
-        }
+        self.equipped = equipped
+        self.terminal = terminal
 
 
     def changeLocation(self, new_location):
@@ -23,10 +19,17 @@ class Player:
 
 
     def getItem(self, item):
-        self.inventory.append(item)
+
+        if not self.inventory == ['']:
+            self.inventory.append(item)
+        else:
+            self.inventory = item
 
     def removeItem(self, item):
-        self.inventory.remove(item)
+        if type(self.inventory) == 'str':
+            self.inventory.remove(item)
+        else:
+            self.inventory = ['']
 
 
     def equipItem(self, item):

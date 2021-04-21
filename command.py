@@ -3,7 +3,7 @@ import os, json
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["adjacent", "door", "kill", "hello", "move"]
+commands = ["adjacent", "door", "equip", "inventory", "kill", "hello", "move"]
 
 # Commands by name
 
@@ -24,6 +24,24 @@ def door(target, player):
         return "Killed " + target.upper() + "!"
 
 
+def equip(target, player):
+    if target == "":
+        output = "Your inventory: " + " ".join(player.inventory)
+        # for item in player.inventory:
+        #     output += [$s](item)
+        return output
+
+    elif target == player.equipped:
+        return "What's in your hand?"
+
+    elif target in player.inventory:
+        player.equipItem(target)
+        return "You equipped your " + target + "."
+
+    else:
+        return "One cannot equip what one does not have in one's inventory."
+
+
 def hello(target, player):
     if target == "":
         return "Hello!"
@@ -38,12 +56,16 @@ def kill(target, player):
         return "Killed " + target.upper() + " at " + data[player.location]['name'] + "!"
 
 
+def inventory(target, player):
+    return equip("", player)
+
 def move(target, player):
     location_data = data[player.location]
     if target == "":
         return adjacent(target, player)
     elif target in data[player.location]['adjacent']:
-        player.location = target
+        print ("******************** move to " + target)
+        player.changeLocation(target)
         return "You moved to " + data[player.location]['name']
     else:
         return "That is not a place you can move to."

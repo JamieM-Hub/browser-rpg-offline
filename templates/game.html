@@ -4,14 +4,31 @@
 <!-- <a href="{{ url_for('start') }}">Start</a>
 <a href="{{ url_for('save') }}">Save</a> -->
 
+<br>
+<br>
+
 <div class="location-img">
     <img src="{{ location.img_path }}" alt="{{ location.name }}" height="600">
 </div>
 
+<br>
 <h3>{{ player.name|upper }} is equipped with the {{ player.equipped|upper }} at {{ location.name|upper }}</h3>
+<br>
 
 <div class="row">
-    
+    <div class="terminal">
+         
+        <p id="terminal_output">
+            {{ output }}
+        </p>
+
+        <form id="command_form" method="POST" action="{{ url_for('game') }}" autocomplete="off">
+            <input type="text" id="user_input" name="user_input" autofocus />
+        </form>
+
+    </div>
+</div>
+
     <!-- <div class="inventory">
         <h5>INVENTORY:
             {% for item in player.inventory %}
@@ -23,17 +40,6 @@
             {% endfor %}
         </h5>
     </div> -->
-
-    <div class="terminal">
-        <div id="terminal_output">{{ output }}</div>
-        <form id="command_form" method="POST" action="{{ url_for('game') }}" autocomplete="off">
-            <input type="text" id="user_input" name="user_input" autofocus />
-        </form>
-    </div>
-
-</div>
-
-
 
 
 

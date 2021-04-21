@@ -37,9 +37,6 @@ def game():
     output = "..."
 
     if request.method == "POST":
-        if request.form.get("location"):
-            player.location = request.form.get("location")
-            output = "You moved to " + data[player.location]['name'] + "."
 
         if request.form.get("inventory"):
             player.inventory = request.form.get("inventory")
@@ -49,8 +46,8 @@ def game():
             user_input = request.form.get("user_input")
             output = command.check(user_input, player)
 
-    location_data = data[player.location]
-    return render_template("game.html", player=player, location=location_data, output=output)
+    location = data[player.location]
+    return render_template("game.html", player=player, location=location, output=output)
 
 
 @app.route("/victory")

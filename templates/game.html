@@ -8,8 +8,6 @@
 <form method="POST" action="{{ url_for('game') }}" autocomplete="off">
     <h4>{{ player.name|upper }} equipped with {{ player.inventory|upper }} at {{ location.name|upper }}</h4>
 
-    <input type="text" id="location" name="location" />
-    <button type="submit">Change location</button>
     <input type="text" id="inventory" name="inventory" />
     <button type="submit">Change inventory</button>
     <input type="text" id="user_input" name="user_input" />

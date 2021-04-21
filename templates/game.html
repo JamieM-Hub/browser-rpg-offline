@@ -7,12 +7,12 @@
 <br>
 <br>
 
-<div class="location-img">
-    <img src="{{ location.img_path }}" alt="{{ location.name }}" height="600">
+<div>
+    <img class="location-img" src="{{ location.img_path }}" alt="{{ location.name }}" width="780">
 </div>
 
 <br>
-<h3>
+<h3 id="status">
     {{ player.name|upper }} is equipped with 
     {% if player.equipped == "nothing" %}
     {{ player.equipped|upper }} 

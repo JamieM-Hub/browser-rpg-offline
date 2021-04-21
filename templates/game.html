@@ -5,15 +5,20 @@
     <img src="{{ location.img_path }}" alt="{{ location.name }}" width="1000">
 </div>
 
-<form method="POST" action="{{ url_for('game', current_location='location_1') }}">
-    <h4>{{ player.name }}</h4>
-    <h5>{{ player.location }}</h5>
-    <h6>{{ player.inventory }}</h6>
-    <input type="number" id="location" name="location"/>
-    <button type="submit">Change location</button>
-    <input type="text" id="inventory" name="inventory"/>
-    <button type="submit">Change inventory</button>
+<form method="POST" action="{{ url_for('game') }}">
+    <h4>{{ player.name|upper }} with {{ player.inventory|upper }} at {{ player.location|upper }}</h4>
 
-    <a href="{{ url_for('victory') }}">Victory</a>
+    <input type="number" id="location" name="location" />
+    <button type="submit">Change location</button>
+    <input type="text" id="inventory" name="inventory" />
+    <button type="submit">Change inventory</button>
+    <input type="text" id="user_command" name="user_command" />
+    <button type="submit">Command</button>
+    <div class="terminal">
+        <p>{{ output }}</p>
+    </div>
 </form>
+<br>
+<a href="{{ url_for('victory') }}">Victory</a>
+
 {% endblock %}

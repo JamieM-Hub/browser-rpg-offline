@@ -3,7 +3,7 @@ import os, json
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["adjacent", "door", "equip", "inventory", "kill", "hello", "load", "move", "name", "save"]
+commands = ["adjacent", "die", "door", "equip", "inventory", "kill", "hello", "load", "move", "name", "quit", "save"]
 
 # Commands by name
 
@@ -15,6 +15,10 @@ def adjacent(target, player):
         output += " " + data[location]['name'] + " (" + location + ") |"
     output += "|"
     return output
+
+
+def die(target, player):
+    return "That's an awfully bad idea, " + player.name + ". But as they say, sometimes it's better to QUIT while you're ahead."
 
 
 def door(target, player):
@@ -80,6 +84,15 @@ def move(target, player):
 def name(target, player):
     player.changeName(target)
     return "From now on, I shall call you " + player.name + "."
+
+
+def quit(target, player):
+    if target == "for-real":
+        return "You wanna quit FOR-REALSIES?"
+    if target == "for-realsies":
+        exit()
+    else:
+        return "Nobody likes a quitter, " + player.name + ". That's one of the things I've learned about humans. Only the weak QUIT FOR-REAL."
 
 
 def save(target, player):

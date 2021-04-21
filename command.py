@@ -126,7 +126,8 @@ def objects(target, player):
     objects = location_data['objects']
     print(objects)
     output = "In this area I can see the following objects: "
-    output += objects
+    for object in objects:
+        output += f"{object} "
     return output
 
 def save(target, player):

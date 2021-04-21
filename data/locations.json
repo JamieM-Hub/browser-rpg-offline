@@ -15,7 +15,7 @@
         "img_path": "../static/img/farm_outside-barn.jpg",
         "NPC": [],
         "adjacent": ["l1", "l3", "l4"],
-        "objects": "pole",
+        "objects": ["pole"],
         "commands": {
             "door" : "A door leads into the barn.", 
             "window": "The barn is empty."
@@ -36,7 +36,7 @@
         "img_path": "../static/img/brpg-fruit-pickers.jpg",
         "NPC": ["pickers"],
         "adjacent": ["l2", "l3", "l5"],
-        "objects": ["fruit"],
+        "objects": ["strawberry", "raspberry"],
         "commands": {
             "pick": "PICKER: \"OI GET OFF MY LAND\""
         }

@@ -38,10 +38,9 @@ def game():
             player.location = "location_" + request.form.get("location")
         if request.form.get("inventory"):
             player.inventory = request.form.get("inventory")
-        if request.form.get("user_command"):
-            user_command = request.form.get("user_command").split()
-            print(command)
-            output = command.check(user_command[0], user_command[1])
+        if request.form.get("user_input"):
+            user_input = request.form.get("user_input")
+            output = command.check(user_input)
 
     with open("data/locations.json", "r") as r:
         data = json.load(r)
@@ -65,6 +64,7 @@ def save():
 
 
 if __name__ == "__main__":
+    os.system('clear')
     print("i can has func!")
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

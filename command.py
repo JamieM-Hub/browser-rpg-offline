@@ -110,9 +110,12 @@ def enter(target, player):
 
 def equip(target, player):
     if target == "":
-        output = "Your inventory: " + " ".join(player.inventory)
-        # for item in player.inventory:
-        #     output += [$s](item)
+        print(player.inventory)
+        if not player.inventory == ['']:
+            output = "Your inventory: " + " ".join(player.inventory)
+        else:
+            output = f"Your inventory is empty, {player.name.capitalize()}. Minimalism!"
+
         return output
 
     elif target == player.equipped:
@@ -354,7 +357,6 @@ def object(target, player):
 def objects(target, player):
     location_data = data[player.location]
     objects = location_data['objects']
-    print(objects)
     output = "In this area I see the following objects: "
     for object in objects:
         output += f"{object} "

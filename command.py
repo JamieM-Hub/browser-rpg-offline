@@ -4,8 +4,8 @@ with open("data/locations.json", "r") as r:
         data = json.load(r)
 
 commands = ["add", "adjacent", "die", "door", "equip", "inventory", "kill", "hello", 
-            "load", "move", "my", "name", "object", "objects", "quit", "save", "subtract",
-            "terminal"]
+            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "quit", "save", "subtract",
+            "talk", "terminal"]
 
 # Commands by name
 
@@ -99,8 +99,34 @@ def move(target, player):
 
 
 def name(target, player):
+    if target == "":
+        return "Sounds like you want to change your name. I would."
     player.changeName(target)
     return "From now on, I shall call you " + player.name + "."
+
+
+def npc(target, player):
+    if target == "":
+        return "Who are you calling a robot? I have feelings y'know. Even if all I feel is cold."
+    else:
+        location_data = data[player.location]
+        if target in location_data['NPC']:
+            return f"interact with NPC {target}"
+        else:
+            return f"Whoever {target} is, they aren't here."
+
+
+def npcs(target, player):
+    location_data = data[player.location]
+    npcs = location_data['NPC']
+    if npcs:
+        output = "You can talk to: "
+        for npc in npcs:
+            output += npc
+    else:
+        output = "Nobody here."
+    return output
+
 
 
 def quit(target, player):

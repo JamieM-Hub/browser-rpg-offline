@@ -1,22 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- <a href="{{ url_for('start') }}">Start</a>
+<a href="{{ url_for('save') }}">Save</a> -->
+
 <div class="location-img">
-    <img src="{{ location.img_path }}" alt="{{ location.name }}" width="1000">
+    <img src="{{ location.img_path }}" alt="{{ location.name }}" height="600">
 </div>
 
-<form method="POST" action="{{ url_for('game') }}" autocomplete="off">
-    <h4>{{ player.name|upper }} equipped with {{ player.inventory|upper }} at {{ location.name|upper }}</h4>
+<h3>{{ player.name|upper }} is equipped with the {{ player.equipped|upper }} at {{ location.name|upper }}</h3>
 
-    <input type="text" id="inventory" name="inventory" />
-    <button type="submit">Change inventory</button>
-    <input type="text" id="user_input" name="user_input" />
-    <button type="submit">Command</button>
+<div class="row">
+    
+    <!-- <div class="inventory">
+        <h5>INVENTORY:
+            {% for item in player.inventory %}
+            {% if item == player.equipped %}
+            [ *{{ item }}* ]
+            {% else %}
+            [ {{ item }} ]
+            {% endif %}
+            {% endfor %}
+        </h5>
+    </div> -->
+
     <div class="terminal">
-        <p>{{ output }}</p>
+        <div id="terminal_output">{{ output }}</div>
+        <form id="command_form" method="POST" action="{{ url_for('game') }}" autocomplete="off">
+            <input type="text" id="user_input" name="user_input" autofocus />
+        </form>
     </div>
-</form>
-<br>
-<a href="{{ url_for('victory') }}">Victory</a>
+
+</div>
+
+
+
+
 
 {% endblock %}

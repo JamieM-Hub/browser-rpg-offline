@@ -1,0 +1,29 @@
+body {
+    text-align: center;
+}
+
+.terminal {
+    height: auto;
+    background-color: black;
+    color: rgb(33, 170, 90);
+    margin: 0 30vw;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#user_input {
+    background-color: black;
+    color: rgb(33, 170, 90);
+    font-family: 'Courier New', Courier, monospace;
+    width: 98%;
+    height: 3vh;
+}
+
+#command_form {
+    text-align: center;
+}
+
+#terminal_output {
+    height: 12vh;
+    padding:8px;
+}

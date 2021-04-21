@@ -4,6 +4,8 @@ import os, json, player, command
 from flask import (Flask, flash, redirect, render_template, request, session,
                    url_for)
 
+with open("data/locations.json", "r") as r:
+    data = json.load(r)
 
 player = player.Player(
     "barry", 
@@ -33,20 +35,22 @@ def start():
 @app.route("/game", methods=["GET", "POST"])
 def game():
     output = "..."
+
     if request.method == "POST":
         if request.form.get("location"):
             player.location = request.form.get("location")
+            output = "You moved to " + data[player.location]['name'] + "."
+
         if request.form.get("inventory"):
             player.inventory = request.form.get("inventory")
+            output = "You equipped your " + player.inventory + "."
+
         if request.form.get("user_input"):
             user_input = request.form.get("user_input")
             output = command.check(user_input, player)
 
-    with open("data/locations.json", "r") as r:
-        data = json.load(r)
-    location = data[player.location]
-    
-    return render_template("game.html", player=player, location=location, output=output)
+    location_data = data[player.location]
+    return render_template("game.html", player=player, location=location_data, output=output)
 
 
 @app.route("/victory")

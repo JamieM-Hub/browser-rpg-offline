@@ -1,13 +1,19 @@
 import os, json
+from random import seed
+from random import choice
 
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
 commands = ["add", "adjacent", "die", "door", "equip", "get", "inventory", "kill", "hello", 
-            "load", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "subtract",
+            "load", "look", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "subtract",
             "take", "talk", "terminal"]
+            
+languages = ["Afghan", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Assamesse", "Aymara", "Azerbaijani", 
+             "Balochi", "Bamanankan"]
 
-# Commands by name
+
+# Command functions by name
 
 def add(target, player):
     try:
@@ -93,6 +99,9 @@ def inventory(target, player):
 def load(target, player):
     player.loadGame()
     return "You just went back in time, " + player.name + "! Humans are crazy."
+
+def look(target, player):
+    return "Seriously? There's a picture..."
 
 
 def move(target, player):
@@ -223,7 +232,7 @@ def terminal(target, player):
 
 # Utility functions
 
-def parse_input(input):
+def parseInput(input):
     input = input.split()
     try:
         return input[0], input[1]
@@ -231,11 +240,18 @@ def parse_input(input):
         return input[0], ""
         
 
-def check(input, player):
-    command, target = parse_input(input)
+def processCommand(input, player):
+    location_data = data[player.location]
+    command, target = parseInput(input)
+
     if command in commands:
         return eval(command + "(target, player)")
+
+    elif command in location_data['commands']:
+        return command
+
     else:
-        return "Is that a real human word or "
+        language = choice(languages)
+        return f"{command}... Is that {language}?"
         
     

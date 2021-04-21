@@ -52,7 +52,7 @@ def game():
     if request.method == "POST":
         if request.form.get("user_input"):
             user_input = request.form.get("user_input")
-            output = command.check(user_input, player)
+            output = command.processCommand(user_input, player)
 
     location = data[player.location]
     return render_template("game.html", player=player, location=location, output=output)

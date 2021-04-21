@@ -5,7 +5,7 @@ from random import choice
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "die", "door", "equip", "get", "inventory", "kill", "hello", 
+commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "get", "inventory", "kill", "hello", 
             "load", "look", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "subtract",
             "take", "talk", "terminal"]
             
@@ -45,10 +45,20 @@ def die(target, player):
 
 
 def door(target, player):
+    return "Ain't no doors round deez parts."
+
+def drink(target, player):
     if target == "":
-        return "I hope you're not talking to me"
+        return "Are you an alcoholic?"
     else:
-        return f"{player.name.capitalize()}?! You killed {target.upper()}!"
+        return eat(target, player)
+
+def eat(target, player):
+    if target == "":
+        return "I don't have anything for human consumption. I feed on emotions."
+    elif target in player.inventory:
+        return "I think you're gonna need that, y'know."
+    return f"You don't have any {target}, silly. Anyway, I hear {target} isn't very good for you."
 
 
 def equip(target, player):
@@ -252,7 +262,7 @@ def processCommand(input, player):
 
     elif command in player.inventory or location_data['objects']:
         return f"Do what with {command}?"
-        
+
     else:
         language = choice(languages)
         return f"{command}... Is that {language}?"

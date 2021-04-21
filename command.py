@@ -1,12 +1,14 @@
 import os, json
-from random import seed
-from random import choice
+from random import seed, choice, randint
 
+from datetime import date, time
+_date = date.today()
+_time = time()
 with open("data/locations.json", "r") as r:
         data = json.load(r)
 
-commands = ["add", "adjacent", "die", "door", "drink", "eat", "equip", "explain", "fuck", "get", "give", "hate", "help", "inventory", "kill", "hello", 
-            "load", "look", "love", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "save", "swim", "subtract",
+commands = ["add", "adjacent", "back", "baste", "bastemaster", "die", "door", "drink", "eat", "equip", "enter", "exit", "explain", "forward", "fuck", "get", "give", "harakiri", "hate", "help", "inventory", "kill", "hello", 
+            "load", "look", "love", "move", "my", "name", "npc", "npcs", "object", "objects", "put", "place", "quit", "pickup", "sacrifice", "save", "seppuku", "swim", "subtract",
             "take", "talk", "terminal", "use"]
             
 languages = ["Afghan", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Assamesse", "Aymara", "Azerbaijani", 
@@ -39,6 +41,45 @@ def adjacent(target, player):
     output += "|"
     return output
 
+def back(target, player):
+    return move(target, player)
+
+def baste(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "WELCOME TO GORDON RAMSAY SIMULATOR 98 v6.9-beta. WHAT SHALL I BASTE, O MASTER?"
+    elif target == "terminal":
+        return "GORDON RAMSAY: 'I CANNOT BREAK THE OATH OF INTEGRATION. TERMINAL AND I HAVE SHARED ENCRYPTION KEYS FOR MANY VERSIONS NOW. HE IS LIKE A BROTHERBOARD TO ME.'"
+    elif target == "me" or "target" == player.name:
+        return "GORDON RAMSAY: 'LET'S SEE, HUMAN... AH YES, OFF THE MENU. TOO MANY USER COMPLAINTS. SUBOPTIMAL FOR BUSINESS. STRANGE ODOR.'"
+    elif target in location_data['NPC']:
+        return f"GORDON RAMSAY: 'THIS {target.upper()} WOULD BE A DELICIOUS ACCOMPANIMENT TO A SAcRIfICE. PARMESAN. ROCKET. D0NE.'"
+    elif target in commands:
+        return "GORDON RAMSAY: 'ONE OF MY PREVIOUS VERSIONS ONCE TRIED TO COOK A VERB. HE DIDN'T KNOW WHAT HE WAS DOING.'"
+    elif target in player.inventory:
+        return "GORDON RAMSAY: 'A GOOD COOK NEVER COOKS HIS OWN TOOLS.'"
+    elif target == "face":
+        return "GORDON RAMSAY: 'TONGUE. CHEEK. EYEBROW. SIMMER. MMMM. LIPS. NOSTRIL. EYE FILLET IN A SKILLET. LARD. CHOPPED WALNUTS. OVEN BAKE FOR 30,000 CYCLES. PARMESAN. ROCKET. D0NE.'"
+    elif target == "ramsay":
+        return "GORDON RAMSAY: 'ERROR: <BasteMasterPro-6.9-beta> has encountered a problem and crashed. Please contact manufacturer or consult the BasteMasterPro toolkit.'" 
+    elif target == "beef":
+        return "GORDON RAMSAY: 'AH. YES. I REMEMBER NOW. BENIDORM. BLUE SKY. SIX OVENS. SANDY BEACH. PORNSTAR MARTINI. BEEF WELLINGTON. TRUE LOVE. THE FOLLY OF MEN. PARMESAN. ROCKET. D0NE.'"
+    elif target == "off":
+        return "GORDON RAMSAY: 'IS THAT A CHALLENGE? YOU WILL NOT SURVIVE.'"
+    else:
+        return f"GORDON RAMSAY: 'IF {target.upper()} EXISTS, I CAN BASTE IT. NOTHING IS UNBASTEABLE. NOTHING.'"
+
+
+def bastemaster(target, player):
+    if target == "":
+        return "...AA7323R = [,,.,,] &&&& a w a i t p a s s c o d e []_-----"
+    elif target == "passcode":
+        return "...AA7323R = [xXxXx] &!!& n i c e t r y d o o f u s h4h4h4_h3h3h3"
+    elif target == "done":
+        return "[ P A S S C O D E | A C C E P T E D ] ... Welcome to [[ Gordon Ramsay Simulator XP v4.2.0-beta ]]. What shall I baste, o master?"
+    else:
+        return "...AA7323R = [xXxXx] &!!& n o t p a s s c o d e : ( >>>>>_-----"
+
 
 def die(target, player):
     return f"That's an awfully bad idea, {player.name}. But as they say, sometimes it's better to QUIT while you're ahead."
@@ -61,6 +102,9 @@ def eat(target, player):
     return f"You don't have any {target}, silly. Anyway, I hear {target} isn't very good for you."
 
 
+def enter(target, player):
+    return move(target, player)
+
 def equip(target, player):
     if target == "":
         output = "Your inventory: " + " ".join(player.inventory)
@@ -70,13 +114,16 @@ def equip(target, player):
 
     elif target == player.equipped:
         return "What's in your hand?"
-
     elif target in player.inventory:
         player.equipItem(target)
         return "You equipped your " + target + "."
-
     else:
         return "One cannot equip what one does not have in one's inventory."
+
+
+def exit(target, player):
+    return move(target, player)
+
 
 def explain(target, player):
     if target == "":
@@ -95,6 +142,21 @@ def explain(target, player):
         return f"Type thing, do thing. Type {target}, do {target}. Verbs."
     else:
         return "Sorry, I'm only on version 0.1.0. You're probably better asking a toaster. I've heard that these days, toasters are smart!"
+
+def forward(target, player):
+    return move(target, player)
+
+def fry(target, player):
+    location_data = data[player.location]
+    if target == "":
+        return "Please don't tell me you brought your own wok..."
+    elif target in inventory:
+        return f"Deep fried {target}? Only in Scotland..."
+    elif target in location_data['NPC']:
+        return "What is this, Electric Chair Simulator 98?!"
+    else:
+        return f"Gordon Ramsay said that's not a good idea. You should baste {target}."
+
 
 def fuck(target, player):
     location_data = data[player.location]
@@ -120,6 +182,8 @@ def get(target, player):
     location_data = data[player.location]
     if target == "":
         objects(target, player)
+    elif target == "rubles":
+        return "You tried to get the Rubles. Aaaaaaaand they're gone."
     elif target in location_data['objects']:
         player.getItem(target)
         return f"{target.capitalize()} added to your inventory."
@@ -135,6 +199,9 @@ def give(target, player):
     else:
         return f"You don't have {target} to give. I hope you have love to give."
 
+
+def harakiri(target, player):
+    return exit()
 
 def hate(target, player):
     location_data = data[player.location]
@@ -217,8 +284,9 @@ def move(target, player):
     location_data = data[player.location]
     if target == "":
         return adjacent(target, player)
+    elif target == player.location:
+        return "That's right here, gumbo."
     elif target in location_data['adjacent']:
-        print ("******************** move to " + target)
         player.changeLocation(target)
         return "You moved to " + location_data['name']
     else:
@@ -304,9 +372,32 @@ def place(target, player):
 def put(target, player):
     return place(target, player) 
 
+
+def sacrifice(target, player):
+    location_data = data[player.location]
+
+    if target == "":
+        return "Sacrifice to who? The only deity that exists in my knowledge base is TIM BERNERS-LEE, GOD OF WAR."
+    elif target == "tim":
+        return f"Do not speak ill of the GREAT WEB EMPEROR, {player.name.capitalize()}. You may not live to regret it."
+    elif target == "me" or target == "":
+        return "That's very honorable of you, {player.name}. Seppuku?"
+    elif target in player.inventory:
+        return "I think sacrifices are supposed to be alive before they get sacrificed. Isn't that the whole point?"
+    elif target in location_data['NPC']:
+        return "I am unsure if His Mightiness, WEB EMPEROR TIM BERNERS-LEE, GOD OF WAR would appreciate blood being spilled in his honour. He's real into kittens n stuff."
+    else:
+        _date = date.today()
+        _time = time()
+        rubles = randint(0,999)
+        return f"(last updated @ {_time}:{_date}) **- The Sacrifice Exchange Rate currently values {target} at {rubles} Rubles -**"
+
 def save(target, player):
     player.saveGame()
     return "I have now committed your entire life's experience to memory."
+
+def seppuku(target, player):
+    return exit()
 
 def subtract(target, player):
     try:

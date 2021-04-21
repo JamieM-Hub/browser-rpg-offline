@@ -37,6 +37,8 @@ body {
     font-family: 'Courier New', Courier, monospace;
     width: 98%;
     height: 3vh;
+    font-size:medium;
+    padding: 0 5px;
 }
 
 #command_form {
@@ -51,7 +53,7 @@ body {
 
 #status {
     position: absolute;
-    top: 730px;
+    top: 745px;
     left: 380px;
     transform: rotate(-0.8deg);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -9,8 +9,8 @@ with open("data/locations.json", "r") as r:
     data = json.load(r)
 
 player = Player(
-        "", 
-        "", 
+        "default dave", 
+        "l1", 
         [""]
     )
 

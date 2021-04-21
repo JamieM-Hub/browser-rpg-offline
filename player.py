@@ -1,11 +1,6 @@
 import json
 
-
 class Player:
-    name = "Default Dave"
-    location = "l1"
-    inventory = []
-    equipped = "nothing"
 
     def __init__(self, name, location, inventory):
         self.name = name

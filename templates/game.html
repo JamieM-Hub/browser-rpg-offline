@@ -12,7 +12,14 @@
 </div>
 
 <br>
-<h3>{{ player.name|upper }} is equipped with the {{ player.equipped|upper }} at {{ location.name|upper }}</h3>
+<h3>
+    {{ player.name|upper }} is equipped with 
+    {% if player.equipped == "nothing" %}
+    {{ player.equipped|upper }} 
+    {% else %}
+    the {{ player.equipped|upper }} 
+    {% endif %} 
+    at {{ location.name|upper }}</h3>
 <br>
 
 <div class="row">
